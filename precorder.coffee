@@ -11,7 +11,7 @@ catch e
 	metadata = {}
 
 try
-	fs.mkdirSync "data"
+	fs.mkdirSync("data")
 catch e
 	throw e unless e.code is "EEXIST"
 
@@ -24,8 +24,8 @@ metadata.files ?= []
 write_stream = null
 file = null
 
-chunk_duration = parse_duration "10s"
-rolling_total_duration = parse_duration "1min"
+chunk_duration = parse_duration("10s")
+rolling_total_duration = parse_duration("1min")
 
 record_to_new_file = ->
 	mic.audioStream.unpipe()
@@ -34,28 +34,24 @@ record_to_new_file = ->
 	# also want to make sure data isn't duplicated
 	
 	for file, i in metadata.files by -1
-		# if file.end ? file.start + chunk_duration < Date.now() - rolling_total_duration
-		# console.log file.end, Date.now() - rolling_total_duration
-		# if file.end < Date.now() - rolling_total_duration
-		# console.log file.end, (file.end ? file.start + chunk_duration), Date.now() - rolling_total_duration
 		if (file.end ? file.start + chunk_duration) < Date.now() - rolling_total_duration
 			console.log "deleting", file.fname
-			metadata.files.splice i, 1
-			fs.unlinkSync file.fname # should probably use async
+			metadata.files.splice(i, 1)
+			fs.unlinkSync(file.fname) # should probably use async
 	
 	file = {
 		fname: "data/#{date_format("yyyy-MM-dd-hhmmss", new Date())}.pcm"
 		start: Date.now()
 	}
-	metadata.files.push file
+	metadata.files.push(file)
 	update_metadata()
 	
 	write_stream = fs.createWriteStream(file.fname)
 	mic.audioStream.pipe(write_stream)
 	
-	setTimeout record_to_new_file, chunk_duration
+	setTimeout(record_to_new_file, chunk_duration)
 
-mic.infoStream.setEncoding "utf8"
+mic.infoStream.setEncoding("utf8")
 mic.infoStream.on "data", (data)->
 	if data.match /sox FAIL/
 		console.error data
@@ -66,10 +62,3 @@ console.log "starting capture"
 mic.startCapture()
 
 record_to_new_file()
-
-# console.log "starting capture"
-# mic.startCapture()
-# console.log "piping to data/rec.pcm"
-# mic.audioStream.pipe(fs.createWriteStream("data/rec.pcm"))
-# mic.infoStream.on "data", (sdf)->
-# 	console.log sdf.toString()

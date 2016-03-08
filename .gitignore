@@ -1,6 +1,7 @@
 
 node_modules/
 data/
+*.wav
 
 # Logs
 logs

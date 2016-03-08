@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "description": "Record audio from the past",
   "scripts": {
-    "start": "coffee precorder.coffee"
+    "start": "coffee precorder.coffee",
+    "precord": "coffee precord.coffee"
   },
   "devDependencies": {
     "coffee-script": "^1.10.0"
   },
   "dependencies": {
     "date-format": "0.0.2",
-    "parse-duration": "^0.1.1"
+    "parse-duration": "^0.1.1",
+    "stream-concat": "^0.1.0",
+    "wav": "^1.0.0"
   }
 }

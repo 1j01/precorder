@@ -13,7 +13,6 @@ start = ->
 	child_process =
 		if is_Mac_or_Windows
 			# spawn('sox', ['-d', '-t', 'dat', '-p'])
-			# spawn('sox', ['-t', 'waveaudio', '1', 'dat', '-p'])
 			spawn('sox', ['-t', 'waveaudio', '0', '-p'])
 		else
 			spawn('arecord', ['-D', 'plughw:1,0', '-f', 'dat'])
