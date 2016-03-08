@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "description": "Record audio from the past",
   "scripts": {
-    "start": "coffee precorder.coffee",
-    "precord": "coffee precord.coffee"
+    "start": "coffee src/precorder.coffee",
+    "precord": "coffee src/precord.coffee"
   },
   "dependencies": {
     "coffee-script": "^1.10.0",
