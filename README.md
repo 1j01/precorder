@@ -38,13 +38,14 @@ you may need to [jump through some serious hoops](http://www.g7smy.co.uk/?p=283)
 
 Do not try this at home.
 
-Wait until I actually get this working.
+(Wait until I actually get this working.)
 
 * Install [Node.js][] and [SoX][] on the device,
-  perhaps with `sudo apt-get install nodejs sox`
+  ideally with `sudo apt-get install nodejs sox`
+  but that ain't just gonna work
 * `git clone` this project onto the device
 * `cd` into the project and run `npm i` to install dependencies
-* Plug in you're microphone
+* Plug in your microphone
 * Run `npm run precorder` and then get that to run in the background somehow
 * Run `precord 1min` to save an audio file somewhere
 * Make the CLI actually respect the time given

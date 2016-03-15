@@ -58,7 +58,7 @@ mic.infoStream.on "data", (data)->
 	else
 		console.log data
 
-console.log "starting capture"
+console.log "starting up..."
 mic.startCapture()
 
 record_to_new_file()
