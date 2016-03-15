@@ -40,7 +40,7 @@ record_to_new_file = ->
 			fs.unlinkSync(file.fname) # should probably use async
 	
 	file = {
-		fname: "data/#{date_format("yyyy-MM-dd-hhmmss", new Date())}.pcm"
+		fname: "data/#{date_format("yyyy-MM-dd-hhmmss", new Date())}.raw"
 		start: Date.now()
 	}
 	metadata.files.push(file)

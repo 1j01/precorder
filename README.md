@@ -3,29 +3,6 @@
 
 Psuedo-magically record audio from the past.
 
-<!-- As a musician, I often improvise nice pieces,
-but when I go to record what I just played,
-at best it loses 
-some of the "feel of it",
-and at worst I can't remember much of it at all.
-It often loses some of the variation that was there from experimentation.
-
-As a musician, I often improvise,
-with much variation due to experimentation.
-However, when I go to record what I just played,
-I can rarely reproduce the sound
-
-This utility lets you
-
-As a musician, I like to improvise,
-but when I go to record what I just played,
-I can often only get the "gist" of it.
-It usually loses a lot of the variation
-that was there originally from experimentation,
-and it can feel different the second time.
-Sometimes I can't remember much of it at all.
-If only I could go back in time and record it. -->
-
 As a musician, I like to improvise,
 but when I go to record what I just played,
 I can often only get the "gist" of it.
