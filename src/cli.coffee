@@ -1,4 +1,6 @@
 
+{version} = require("../package")
+
 arg = process.argv[2]
 
 help = """
@@ -18,7 +20,7 @@ help = """
 if not arg or arg in ["--help", "-h"]
 	console.log help
 else if arg in ["--version", "-V", "-v"]
-	console.log require("./package").version
+	console.log version
 else
 	console.log "#{arg}, huh? how about just the whole thing?"
 	require("./precord.coffee")
