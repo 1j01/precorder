@@ -35,7 +35,7 @@ record_to_new_file = ->
 	
 	for file, i in metadata.files by -1
 		if (file.end ? file.start + chunk_duration) < Date.now() - rolling_total_duration
-			console.log "deleting", file.fname
+			console.log "deleting chunk file:", file.fname
 			metadata.files.splice(i, 1)
 			fs.unlinkSync(file.fname) # should probably use async
 	
@@ -48,7 +48,15 @@ record_to_new_file = ->
 	
 	write_stream = fs.createWriteStream(file.fname)
 	mic.audioStream.pipe(write_stream)
-	
+
+	console.log "writing chunk file:", file.fname
+	write_stream.on "finish", ->
+		chunk_file_size = fs.statSync(file.fname).size
+		console.log "wrote chunk file:", file.fname
+		console.log "  size:", chunk_file_size, "bytes"
+		if chunk_file_size is 0
+			console.error "ERROR: no audio data in chunk!"
+
 	setTimeout(record_to_new_file, chunk_duration)
 
 mic.infoStream.setEncoding("utf8")

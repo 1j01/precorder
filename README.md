@@ -43,7 +43,8 @@ and you may need to [jump through some serious hoops](http://www.g7smy.co.uk/201
 
 ## Setup
 
-I'm not sure this thing works yet, so you probably shouldn't bother with it!
+I'm not sure this thing works yet, so you probably shouldn't bother with it,
+but these are the approximate steps it would take:
 
 * `ssh` into (or open a terminal on) the device you wish to use
 * Install a recent version of [Node.js][] if you don't have one.
@@ -60,14 +61,16 @@ which can be done with `sudo apt-get install sox`
 and set environment variables using the information you somehow obtained,
 e.g. `export PRECORDER_AUDIODEV="hw:0,0" ; export AUDIODRIVER="alsa"`
 * Run `npm start`
-* Run `precord 1min` to save an audio file somewhere
+* Run `precord 1min` to save an audio file in `data/output/`
 
 
 ## TODO
 
-* Get it working
-* Set up `npm start` as a deamon process and allow running at startup; maybe use `npm stop` to stop it
+* Get it working!
+* Set up `npm start` as a daemon process and allow running at startup; maybe use `npm stop` to stop it
 * Make the CLI actually respect the time given
+* Make the CLI accept an output file path
+* Handle stdout specially: maybe add an alias (`-`); don't output other stuff along with the audio file data
 * Polish up and publish to npm
 
 [Node.js]: https://nodejs.org/
