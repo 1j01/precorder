@@ -71,6 +71,24 @@ e.g. `export PRECORDER_AUDIODEV="hw:0,0" ; export AUDIODRIVER="alsa"`
 * If it worked, run `precord 1min` to save an audio file in `data/output/`
 (and make sure it's an actual recording you can play)
 
+-----
+
+I wanted to use a MobilePre to record stereo from two analog microphones,
+but it was an older version of the product so I had to install a driver for it,
+specifically "madfuload" (which is made for only a handful of devices).
+
+Also, it seemed like it worked; I could output to the speakers with `speaker-test`;
+but I couldn't change any of the levels in `alsamixer`.
+Later I found that `arecord` said "Unable to install hw params" which sounds like the same symptom.
+Running the same command the next day it didn't get that message.
+I think really I just needed to unplug and plug it back in after installing the drivers.
+
+Also, for some reason, it wants to start out with the right channel at zero volume,
+which I only figured out by accidentally hitting <kbd>E</kbd> in `alsamixer`
+(I was thinking it was detecting it only as a mono device,
+which seems like a reasonable thing that could happen;
+why would one of the channels just be off by default??)
+
 
 ## TODO
 
@@ -79,6 +97,15 @@ e.g. `export PRECORDER_AUDIODEV="hw:0,0" ; export AUDIODRIVER="alsa"`
 * Make the CLI actually respect the time given
 * Make the CLI accept an output file path
 * Handle stdout specially: maybe add an alias (`-`); don't output other stuff along with the audio file data
+* Make it resilient to disconnecting and reconnecting the mic or soundcard
+	(currently it gets something like
+	```
+	rec WARN alsa: File descriptor in bad state
+	rec FAIL sox: `hw:1,0' No such device: Operation not permitted
+	In:0.00% 00:12:21.97 [00:00:00.00] Out:35.6M [      |      ]        Clip:0
+	Done.
+	```
+	and then continues on, writing empty chunk files and giving errors about it)
 * Polish up and publish to npm
 
 [Node.js]: https://nodejs.org/
