@@ -14,19 +14,23 @@ I like to improvise on the piano,
 but when I go to record what I just played,
 I might recall the "gist" of it,
 but I can't remember a lot of the variations
-that I came up with while originally experimenting,
+that I came up with originally while experimenting.
 At the very least it can have a different "feel" the second time.
-At the other end of the scale, sometimes I can't remember much of it at all.
+And sometimes I can't remember much of it at all.
 
-I could try to always record what I play,
-but I would end up saving a ton of mediocre playing
-(rather than listening back to the recordings and editing each to contain only whatever good new stuff was in there).
+If I always started a recording before I played,
+I would end up saving a ton of long, largely  mediocre recordings.
+I would think, "well, there's some good stuff in there."
+I wouldn't listening back to the recordings and edit each one down to contain only whatever good new stuff was in there.
 
-If only I could go back in time to record.
+"If only I could go back in time to record."
 
-This utility basically lets you do that.
-With an always-on system and a dedicated microphone, that is.
-That's the idea anyways.
+With this tool, you still have to hit a button to save a recording,
+so you don't end up saving lots of stuff you don't really want or care about,
+but you don't have to hit a button to record,
+so you can capture creative whimsy, post-whimsy.
+
+\#postwhimsy
 
 
 ## Requirements
@@ -38,7 +42,7 @@ you'll need to buy a USB sound card (or perhaps a sound card "HAT"? (Hardware At
 and you may need to [jump through some serious hoops](http://www.g7smy.co.uk/2013/08/recording-sound-on-the-raspberry-pi/))
 * Node.js and SoX (installation instructions below)
 * Willingness to use the command line
-* Who knows, because I haven't gotten this working yet (on the Pi)
+* Who knows, because I haven't gotten this working yet (at least not on the Pi)
 
 
 ## Setup
@@ -47,21 +51,25 @@ I'm not sure this thing works yet, so you probably shouldn't bother with it,
 but these are the approximate steps it would take:
 
 * `ssh` into (or open a terminal on) the device you wish to use
-* Install a recent version of [Node.js][] if you don't have one.
-The best way is to install [`nvm`][nvm]; that way you can get the latest versions, and can switch versions easily later.
-You can run [their installer][nvm installtion] and then `nvm install --lts`.
-* Install [SoX][],
-which can be done with `sudo apt-get install sox`
-* Clone this project with `git clone https://github.com/1j01/precorder.git`
-* Enter the project folder (i.e. `cd precorder`)
+* Install a recent version of [Node.js][].
+The best way is to use [`nvm`][nvm]; that way you can get the latest versions, and can switch versions easily later.
+You can run [their installer][nvm installtion] and then run `nvm install --lts` to get a recent, supported version.
+* Install [SoX][] with `sudo apt-get install sox`
+* Clone the project with `git clone https://github.com/1j01/precorder.git`
+* Enter the project folder, i.e. `cd precorder`
 * Run `npm i` to install dependencies
 * Run `npm link` to make the `precord` CLI available
 * Plug in your USB microphone or sound card
-* Find an ALSA ID such as `hw:1,0` with `arecord -L` or something
-and set environment variables using the information you somehow obtained,
+* Find an ALSA device ID such as `hw:0,0`
+by running `arecord -l` and looking at the numbers where it says `card N` and `device N`;
+the ID should be of the form `hw:card,device` where `card` and `device` are the numbers from that command
+(maybe it could need `plughw` in place of `hw`, idk)
+* Set some environment variables, using the device ID for `PRECORDER_AUDIODEV`:
 e.g. `export PRECORDER_AUDIODEV="hw:0,0" ; export AUDIODRIVER="alsa"`
 * Run `npm start`
-* Run `precord 1min` to save an audio file in `data/output/`
+* Wait for it to say "wrote chunk file"; it might show an error at this point
+* If it worked, run `precord 1min` to save an audio file in `data/output/`
+(and make sure it's an actual recording you can play)
 
 
 ## TODO
