@@ -5,9 +5,16 @@ date_format = require "date-format"
 parse_duration = require "parse-duration"
 
 try
-	metadata = JSON.parse(fs.readFileSync("data/metadata.json", "utf8"))
+	metadata_json = fs.readFileSync("data/metadata.json", "utf8")
+	metadata = JSON.parse(metadata_json)
 catch e
-	throw e unless e.code is "ENOENT"
+	if e instanceof SyntaxError
+		console.error("")
+		fs.writeFileSync("data/metadata.json", metadata_json, "utf8")
+	else if e.code is "ENOENT"
+		throw e unless e.code is "ENOENT"
+	else
+		console.error("Warning: ")
 	metadata = {}
 
 try

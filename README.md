@@ -64,12 +64,23 @@ You can run [their installer][nvm installtion] and then run `nvm install --lts` 
 by running `arecord -l` and looking at the numbers where it says `card N` and `device N`;
 the ID should be of the form `hw:card,device` where `card` and `device` are the numbers from that command
 (maybe it could need `plughw` in place of `hw`, idk)
-* Set some environment variables, using the device ID for `PRECORDER_AUDIODEV`:
-e.g. `export PRECORDER_AUDIODEV="hw:0,0" ; export AUDIODRIVER="alsa"`
+* Set some environment variables, using the device ID for `AUDIODEV`:
+e.g. `export AUDIODEV="hw:0,0" ; export AUDIODRIVER="alsa"`
 * Run `npm start`
 * Wait for it to say "wrote chunk file"; it might show an error at this point
 * If it worked, run `precord 1min` to save an audio file in `data/output/`
 (and make sure it's an actual recording you can play)
+
+-----
+
+For Windows, instead of exporting `AUDIODEV` and `AUDIODRIVER`,
+do something like `set PRECORDER_AUDIODEV=1`
+where `1` is a WaveAudio device ID.
+The default is `0`.
+(Your best bet is probably trial and error,
+although it looks like it is possible to [list WaveAudio devices](https://stackoverflow.com/a/7890841/2624876).)
+
+Also install [SoX][] differently (win32 installer) and use [`nvm-windows`](https://github.com/coreybutler/nvm-windows).
 
 -----
 

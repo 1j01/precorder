@@ -15,24 +15,16 @@ start = ->
 	bit_depth = 16
 	
 	child_process =
-		# if is_Windows
-		# 	# spawn('sox', ['-d', '-t', 'dat', '-p'])
-		# 	spawn('sox', ['-t', 'waveaudio', '0', '-p'])
-		# else
 		if is_Windows
-			if process.env.PRECORDER_AUDIODEV # e.g. 1
-				spawn('sox', ['-t', 'waveaudio', process.env.PRECORDER_AUDIODEV, '-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels, '-p'])
-			else
-				spawn('sox', ['-t', 'waveaudio', '0', '-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels, '-p'])
-		# else if process.env.PRECORDER_AUDIODEV
-		# 	spawn('sox', [process.env.PRECORDER_AUDIODEV, '-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels, '-p'])
-		# else
-		# 	spawn('sox', ['-d', '-t', 'dat', '-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels, '-p'])
+			device_number = process.env.PRECORDER_AUDIODEV or '0'
+			spawn('sox', ['-t', 'waveaudio', device_number,
+				'-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels,
+				'-p'])
 		else
-			if process.env.PRECORDER_AUDIODEV # e.g. hw:1?
-				spawn('rec', [process.env.PRECORDER_AUDIODEV, '-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels, '-p', '-'])
-			else
-				spawn('rec', ['-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels, '-p', '-'])
+			spawn('rec', [
+				'-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels,
+				'-t', 'dat', '-'])
+				#'-p'])
 	
 	child_process.stdout.pipe(audio)
 	child_process.stderr.pipe(info)
