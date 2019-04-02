@@ -36,7 +36,7 @@ combined_stream.on "end", ->
 	sample_rate = 48000
 	bit_depth = 16
 	
-	child_process = spawn("sox", ["-r", sample_rate, "-e", "unsigned", "-b", bit_depth, "-c", n_channels, combined_raw_file, output_wav_file])
+	child_process = spawn("sox", ["-r", sample_rate, "-e", "unsigned-integer", "-b", bit_depth, "-c", n_channels, combined_raw_file, output_wav_file])
 	
 	child_process.stderr.setEncoding "utf8"
 	child_process.stderr.on "data", (data)->

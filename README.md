@@ -51,5 +51,7 @@ Do not try this at home.
 * Make the CLI actually respect the time given
 * Fix things, polish up, publish to npm, update this document, all that jazz
 
+<!-- This could be cool if it works with (loud) piano playing: https://github.com/tom-s/clap-detector -->
+
 [Node.js]: https://nodejs.org/
 [SoX]: http://sox.sourceforge.net/

@@ -10,29 +10,11 @@ info = new PassThrough
 start = ->
 	return if child_process?
 	
-	n_channels = 2
-	sample_rate = 48000
-	bit_depth = 16
-	
 	child_process =
-		# if is_Windows
-		# 	# spawn('sox', ['-d', '-t', 'dat', '-p'])
-		# 	spawn('sox', ['-t', 'waveaudio', '0', '-p'])
-		# else
 		if is_Windows
-			if process.env.PRECORDER_AUDIODEV # e.g. 1
-				spawn('sox', ['-t', 'waveaudio', process.env.PRECORDER_AUDIODEV, '-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels, '-p'])
-			else
-				spawn('sox', ['-t', 'waveaudio', '0', '-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels, '-p'])
-		# else if process.env.PRECORDER_AUDIODEV
-		# 	spawn('sox', [process.env.PRECORDER_AUDIODEV, '-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels, '-p'])
-		# else
-		# 	spawn('sox', ['-d', '-t', 'dat', '-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels, '-p'])
+			spawn('sox', ['-t', 'waveaudio', process.env.PRECORDER_AUDIODEV ? 0, '-p'])
 		else
-			if process.env.PRECORDER_AUDIODEV # e.g. hw:1?
-				spawn('rec', [process.env.PRECORDER_AUDIODEV, '-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels, '-p'])
-			else
-				spawn('rec', ['-r', sample_rate, '-e', 'unsigned-integer', '-b', bit_depth, '-c', n_channels, '-p'])
+			spawn('rec', ['-p'])
 	
 	child_process.stdout.pipe(audio)
 	child_process.stderr.pipe(info)

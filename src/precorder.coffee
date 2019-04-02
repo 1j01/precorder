@@ -1,4 +1,7 @@
 
+is_Windows = require('os').type().match(/Windows/)
+{spawn} = require('child_process')
+
 fs = require "fs"
 mic = require "./microphone"
 date_format = require "date-format"
@@ -27,8 +30,24 @@ file = null
 chunk_duration = parse_duration("10s")
 rolling_total_duration = parse_duration("1min")
 
+
+console.log "starting up..."
+sox_child_process =
+	if is_Windows
+		spawn('sox', ['-t', 'waveaudio', process.env.PRECORDER_AUDIODEV ? 0, '-p'])
+	else
+		spawn('rec', ['-p'])
+
+sox_child_process.stderr.setEncoding("utf8")
+sox_child_process.stderr.on "data", (data)->
+	if data.match /sox FAIL/
+		console.error data
+	else
+		console.log data
+
+
 record_to_new_file = ->
-	mic.audioStream.unpipe()
+	sox_child_process.stdout.unpipe()
 	write_stream?.end() # will this cut off the end of the file?
 	file?.end = Date.now() # should probably wait for end or finish event
 	# also want to make sure data isn't duplicated
@@ -47,18 +66,8 @@ record_to_new_file = ->
 	update_metadata()
 	
 	write_stream = fs.createWriteStream(file.fname)
-	mic.audioStream.pipe(write_stream)
+	sox_child_process.stdout.pipe(write_stream)
 	
 	setTimeout(record_to_new_file, chunk_duration)
-
-mic.infoStream.setEncoding("utf8")
-mic.infoStream.on "data", (data)->
-	if data.match /sox FAIL/
-		console.error data
-	else
-		console.log data
-
-console.log "starting up..."
-mic.startCapture()
 
 record_to_new_file()
