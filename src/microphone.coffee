@@ -1,11 +1,19 @@
 
 is_Windows = require('os').type().match(/Windows/)
-{spawn} = require('child_process')
+{spawn, execSync} = require('child_process')
 {PassThrough} = require('stream')
 
 child_process = null
 audio = new PassThrough
 info = new PassThrough
+
+# TODO: make this properly cross-platform
+
+try sox_version = execSync("sox --version").toString("utf8").match(/\bv?(\S*\d\.\d\S*)\b/i)[1]
+console.log("SoX version:", sox_version ? "not found")
+if not sox_version
+	console.error("\nPlease install SoX:\n\n    sudo apt install sox\n")
+	process.exit(1)
 
 start = ->
 	return if child_process?

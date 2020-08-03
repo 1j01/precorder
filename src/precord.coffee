@@ -12,8 +12,10 @@ try
 catch e
 	if e.code is "ENOENT"
 		console.error "You must setup the background process first!"
+		process.exit(1)
 	else
 		console.error "Failed to read metadata:", e
+		process.exit(1)
 
 # console.log "precord let's say 30 seconds"
 console.log "save entire rolling audio buffer"

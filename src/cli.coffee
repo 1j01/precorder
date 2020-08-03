@@ -22,5 +22,5 @@ if not arg or arg in ["--help", "-h"]
 else if arg in ["--version", "-V", "-v"]
 	console.log version
 else
-	console.log "#{arg}, huh? how about just the whole thing?"
+	console.log "(ignoring arument) #{arg}, you say? how about just whatever is in the rolling audio buffer?"
 	require("./precord.coffee")
